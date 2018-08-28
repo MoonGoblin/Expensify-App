@@ -1,12 +1,21 @@
 import { createStore } from 'redux';
 
 const store = createStore((state = { count: 0 }, action) => {
-    if(action.type === 'INCREMENT') {
+    switch (action.type) {
+        case 'INCREMENT':
+            return {
+                count: state.count + 1
+            };
+        case 'DECREMENT':
         return {
-            count: state.count + 1 
+            count: state.count - 1
         }
-    } else {
-    return state;
+        case 'RESET':
+        return {
+            count: 0
+        }
+        default: 
+            return state;
     }
 });
 
@@ -16,12 +25,21 @@ console.log(store.getState());
 
 // increment, decrement, reset
 store.dispatch({
-    //type: 'INCREMENT_OTHER' // if you have a second word, you use underscore
     type: 'INCREMENT'
 });
 
 store.dispatch({
     type: 'INCREMENT'
+});
+
+
+// RESET - set the count equal to zero
+store.dispatch({
+    type: 'RESET'
+});
+
+store.dispatch({
+    type: 'DECREMENT'
 });
 
 // I'd like to reset the count
