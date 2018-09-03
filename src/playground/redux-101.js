@@ -1,12 +1,9 @@
-// This now shows a fully-baked redux example set up
-
 import { createStore } from 'redux';
 
 // Action generators - functions that return action objects
 
 const incrementCount = ({ incrementBy = 1 } = {}) => ({
         type: 'INCREMENT',
-        //incrementBy: typeof incrementBy === 'number' ? incrementBy : 1
         incrementBy
 });
 
@@ -15,21 +12,27 @@ const decrementCount = ({ decrementBy = 1 } = {}) => ({
     decrementBy
 });
 
-// Challenge: 
-// Set up two more action generators
-
-// setCount
 const setCount = ({ count = 0} = {}) => ({
     type: 'SET',
     count
 });
 
-// resetCount
 const resetCount = () => ({
     type: 'RESET'
 });
 
-const store = createStore((state = { count: 0 }, action) => {
+// Reducers
+// 1. Reducers are "pure" functions (what it returns comes from only 
+//    the things passed in.) A non-pure function is in some way 
+//    dependent on things other than what is passed into the function, 
+//    such as a global variable. Reducers need to computer the new state
+//    based on only the old state and the action. It shouldn't interact 
+//    with things outside its scope.
+// 2. We want to never directly change state or action. Instead we 
+//    read off them and return and object that gives a new state
+
+
+const countReducer = (state = { count: 0 }, action) => {
     switch (action.type) {
         case 'INCREMENT':
             return {
@@ -50,7 +53,11 @@ const store = createStore((state = { count: 0 }, action) => {
         default: 
             return state;
     }
-});
+}
+
+
+// This function is called a REDUCER - a core concept - see Redux documentation
+const store = createStore(countReducer);
 
 const unsubscribe = store.subscribe(() => {
     console.log(store.getState());
