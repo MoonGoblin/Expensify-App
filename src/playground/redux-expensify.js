@@ -1,4 +1,5 @@
 import { createStore, combineReducers } from 'redux';
+import uuid from 'uuid';
 
 // Lots of possible actions:
 // Its not feasible to do these with
@@ -7,7 +8,30 @@ import { createStore, combineReducers } from 'redux';
 // root property in our redux store.
 
 // ADD_EXPENSE
+const addExpense = ({
+        description = '', 
+        note = '', 
+        amount = 0, 
+        createdAt = 0 
+    } = {}) => ({
+    type: 'ADD_EXPENSE',
+    expense: {
+        // using npm uuid library for this
+        id: uuid(),
+        description,
+        note,
+        amount,
+        createdAt
+    }
+});
+
 // REMOVE_EXPENSE
+const removeExpense = ({ id } = {}) => ({
+    type: 'REMOVE_EXPENSE',
+    id
+});
+
+
 // EDIT_EXPENSE
 // SET_TEXT_FILTER
 // SORT_BY_DATE
@@ -21,6 +45,14 @@ const expensesReducerDefaultState = [];
 
 const expensesReducer = (state = expensesReducerDefaultState, action) => {
     switch (action.type) {
+        case 'ADD_EXPENSE':
+            //return state.concat(action.expense);
+            return [
+                ...state,
+                action.expense
+            ];
+        case 'REMOVE_EXPENSE':
+            return state.filter(({ id }) => id !== action.id);
         default:
         return state;
     }
@@ -42,7 +74,6 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
     }    
 };
 
-
 // Store creation
 const store = createStore(
     combineReducers({
@@ -51,7 +82,17 @@ const store = createStore(
     })
 );
 
-console.log(store.getState());
+store.subscribe(() => {
+    console.log(store.getState());
+});
+
+// Dispatching actions
+const expenseOne = store.dispatch(addExpense({description: 'Rent', amount: 100 }));
+const expenseTwo = store.dispatch(addExpense({description: 'Coffee', amount: 300 }));
+
+store.dispatch(removeExpense({id: expenseOne.expense.id }));
+
+console.log(expenseOne);
 
 const demoState = {
     expenses: [{
