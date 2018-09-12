@@ -140,36 +140,61 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
     }    
 };
 
+// timestamps
+// they count in miliseconds
+// 0 represents January 1, 1970 - "unix epoch"
+
+
+// Get visible expenses
+const getVisibleExpenses = (expenses, {text, sortBy, startDate, endDate }) => {
+    return expenses.filter((expense) => {
+        const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+        const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+        const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+
+        // Challenge Above
+        // figure out if expenses.description as the text variable string inside of it
+        // includes method (one string includes another) google javascript includes - string version
+        // convert both strings to lower case
+
+        return startDateMatch && endDateMatch && textMatch;
+    });
+};
+
 // Store creation
+
+
 const store = createStore(
     combineReducers({
         expenses: expensesReducer,
-        filter: filtersReducer
+        filters: filtersReducer
     })
 );
 
 store.subscribe(() => {
-    console.log(store.getState());
+    const state = store.getState();
+    const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+    console.log(visibleExpenses);
 });
 
 // Dispatching actions
-// const expenseOne = store.dispatch(addExpense({description: 'Rent', amount: 100 }));
-// const expenseTwo = store.dispatch(addExpense({description: 'Coffee', amount: 300 }));
+const expenseOne = store.dispatch(addExpense({description: 'Rent', amount: 100, createdAt: 1000 }));
+const expenseTwo = store.dispatch(addExpense({description: 'Coffee', amount: 300, createdAt: -1000 }));
 
 // store.dispatch(removeExpense({id: expenseOne.expense.id }));
 
 // store.dispatch(editExpense(expenseTwo.expense.id, {amount: 500}));
 
-// store.dispatch(setTextFilter('rent'));
+store.dispatch(setTextFilter('rent'));
 // store.dispatch(setTextFilter());
 
 // store.dispatch(sortByAmount());
 // store.dispatch(sortByDate());
 
-store.dispatch(setStartDate(125)); // change start date to 125
-store.dispatch(setStartDate()); // should set = to undefined
-store.dispatch(setEndDate(1250));
-store.dispatch(setEndDate());
+// store.dispatch(setStartDate(0)); // change start date to 125
+// store.dispatch(setStartDate()); // should set = to undefined
+// store.dispatch(setEndDate(1250));
+// store.dispatch(setEndDate(999));
 
 
 const demoState = {
