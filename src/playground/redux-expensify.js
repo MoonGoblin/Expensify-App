@@ -1,41 +1,35 @@
 import { createStore, combineReducers } from 'redux';
 import uuid from 'uuid';
 
-// Lots of possible actions:
-// Its not feasible to do these with
-// a single reducerer
-// But we can use a single reducer for each
-// root property in our redux store.
-
 // ADD_EXPENSE
 const addExpense = ({
-        description = '', 
-        note = '', 
-        amount = 0, 
-        createdAt = 0 
-    } = {}) => ({
-    type: 'ADD_EXPENSE',
-    expense: {
-        // using npm uuid library for this
-        id: uuid(),
-        description,
-        note,
-        amount,
-        createdAt
-    }
+    description = '', 
+    note = '', 
+    amount = 0, 
+    createdAt = 0 
+} = {}) => ({
+type: 'ADD_EXPENSE',
+expense: {
+    // using npm uuid library for this
+    id: uuid(),
+    description,
+    note,
+    amount,
+    createdAt
+}
 });
 
 // REMOVE_EXPENSE
 const removeExpense = ({ id } = {}) => ({
-    type: 'REMOVE_EXPENSE',
-    id
+type: 'REMOVE_EXPENSE',
+id
 });
 
 //EDIT_EXPENSE
 const editExpense = (id, updates) => ({
-    type: 'EDIT_EXPENSE',
-    id,
-    updates
+type: 'EDIT_EXPENSE',
+id,
+updates
 });
 
 // SET_TEXT_FILTER
@@ -139,10 +133,6 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
             return state;
     }    
 };
-
-// timestamps
-// they count in miliseconds
-// 0 represents January 1, 1970 - "unix epoch"
 
 
 // Get visible expenses

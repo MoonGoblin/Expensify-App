@@ -8,7 +8,7 @@ const path = require("path");
 
 // exposes object to another file in node
 module.exports = {
-    entry: "./src/playground/redux-expensify.js", // where it should start
+    entry: "./src/app.js", // where it should start
     output: {
         path: path.join(__dirname, "public"),
         filename: "bundle.js"
