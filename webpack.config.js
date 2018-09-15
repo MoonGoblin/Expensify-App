@@ -8,7 +8,7 @@ const path = require("path");
 
 // exposes object to another file in node
 module.exports = {
-    entry: "./src/playground/hoc.js", // where it should start
+    entry: "./src/app.js", // where it should start
     output: {
         path: path.join(__dirname, "public"),
         filename: "bundle.js"
@@ -36,6 +36,7 @@ module.exports = {
         historyApiFallback: true
     }
 };
+
 // path is an absolute path!!!
 // variable makes easier!!
 // use console.log(__dirname);

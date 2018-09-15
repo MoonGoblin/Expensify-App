@@ -1,6 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 import uuid from 'uuid';
 
+// google react-redux and you will get the GitHub repository
+// which is actually pretty small
+
 // ADD_EXPENSE
 const addExpense = ({
     description = '', 
