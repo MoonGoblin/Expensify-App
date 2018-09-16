@@ -15,14 +15,14 @@ const store = configureStore();
 // Challenge
 // addExpense -> Water bill
 // addExpense -> Gas bill
-const expenseOne = store.dispatch(addExpense({description: 'Water bill', amount: 100, createdAt: -21000 }));
+const expenseOne = store.dispatch(addExpense({description: 'Water bill', amount: 4500, createdAt: -21000 }));
 const expenseTwo = store.dispatch(addExpense({description: 'Gas bill', amount: 300, createdAt: -1000 }));
 
 // setTextFilter -> bill (2 items) -> water (1 item)
 store.dispatch(setTextFilter('water'));
 
 setTimeout(() => {
-    store.dispatch(setTextFilter('rent'));
+    store.dispatch(setTextFilter('bill'));
 }, 3000);
 
 // getVisibleExpenses -> print visibles to screen
