@@ -3,21 +3,23 @@ import uuid from 'uuid';
 // action generators for expenses
 
 // ADD_EXPENSE
-export const addExpense = ({
-    description = '', 
-    note = '', 
-    amount = 0, 
-    createdAt = 0 
-} = {}) => ({
-type: 'ADD_EXPENSE',
-expense: {
-    // using npm uuid library for this
-    id: uuid(),
-    description,
-    note,
-    amount,
-    createdAt
-}
+export const addExpense = (
+    {
+        description = '', 
+        note = '', 
+        amount = 0, 
+        createdAt = 0 
+    } = {}
+    ) => ({
+    type: 'ADD_EXPENSE',
+    expense: {
+        // using npm uuid library for this
+        id: uuid(),
+        description,
+        note,
+        amount,
+        createdAt
+    }
 });
 
 // REMOVE_EXPENSE
