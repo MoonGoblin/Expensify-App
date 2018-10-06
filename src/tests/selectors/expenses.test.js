@@ -1,8 +1,6 @@
 import moment from 'moment';
 import selectExpenses from '../../selectors/expenses';
 
-
-
 const expenses = [{
     id: '1',
     description: 'Gum',
@@ -59,7 +57,6 @@ test('should filter by endDate', () => {
     expect(result).toEqual([expenses[0],expenses[1]]);
 });
 
-
 // should sort by date
 test('should sort by date', () => {
     const filters = {
@@ -72,8 +69,7 @@ test('should sort by date', () => {
     expect(result).toEqual([expenses[2],expenses[0], expenses[1]]);
 });
 
-
-// should sort bby amount
+// should sort by amount
 test('should sort by amount', () => {
     const filters = {
         text: '',
